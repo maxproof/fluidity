@@ -9,6 +9,7 @@ public interface TimeZoneIds {
 	String AST = "America/Anchorage";
 	String IST = "Asia/Kolkata";
 	String JST = "Asia/Tokyo";
+	String ECT = "Europe/Paris";
 	
 	
 
