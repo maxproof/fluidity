@@ -85,7 +85,7 @@ public class SoapServiceClient {
 		attachmentData.setImageData(new DataHandler(source));
 		serviceInput.setAttachmentData(attachmentData);
 		
-		//invoke remote service
+		//invoke remote service //WARNING: TO FIX!
 		try {
 			String dateTime = seiProxy.getDateTimeByZone(serviceInput);
 			System.out.println("Date & Time found: " + dateTime);
