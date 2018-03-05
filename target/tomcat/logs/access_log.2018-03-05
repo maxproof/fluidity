@@ -1,0 +1,7 @@
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:18:26:26 +0100] "GET /fluidity/services/dateTimeZoneService HTTP/1.1" 500 524 http-bio-8081-exec-1 117
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:18:26:26 +0100] "GET /fluidity/services/dateTimeZoneService HTTP/1.1" 500 524 http-bio-8081-exec-2 6
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:18:26:31 +0100] "GET /fluidity/services/dateTimeZoneService HTTP/1.1" 500 524 http-bio-8081-exec-3 6
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:18:27:01 +0100] "GET /fluidity/services/dateTimeZoneService HTTP/1.1" 500 524 http-bio-8081-exec-4 6
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:18:27:48 +0100] "GET /fluidity/services/dateTimeZoneService?wsdl HTTP/1.1" 200 3868 http-bio-8081-exec-5 66
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:18:27:49 +0100] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8081-exec-7 0
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:18:28:13 +0100] "GET /fluidity/services/dateTimeZoneService?wsdl HTTP/1.1" 200 3868 http-bio-8081-exec-8 11

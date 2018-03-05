@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:soap="http://cxf.apache.org/bindings/soap"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxrs
+http://cxf.apache.org/schemas/jaxrs.xsd
+http://cxf.apache.org/core 
+http://cxf.apache.org/schemas/core.xsd
+http://cxf.apache.org/jaxws
+http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<!-- These are included in the dependency jar cxf-xxx.jar, used by cxf framework -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+
+	<!-- Enable built-in features for all the services deployed -->
+	<cxf:bus>
+		<cxf:features>
+			<!-- CXF logging feature to log incoming and outgoing messages -->
+			<cxf:logging />
+		</cxf:features>
+	</cxf:bus>
+
+	<!-- SOAP Service configurations. There are many attributes to endpoint 
+		element. The main one to consider are: -->
+	<!-- address: The service publish address -->
+	<!-- implementor: The implementor of jaxws endpoint interface. You can specify the 
+		implementor class name here, or just the ref bean name in the format of "#REF_BEAN_NAME" -->
+
+	<jaxws:endpoint id="dateTimeZoneService"
+		implementor="org.fluidity.soap.service.DateTimeZoneServiceImpl"
+		address="/dateTimeZoneService">
+
+		<!-- A Feature in CXF is a way of adding capabilities to a Server, Client 
+			or Bus. For example, we could add the ability to log messages for each of 
+			these objects, by configuring them with a LoggingFeature. -->
+		<jaxws:features>
+			<!-- Logging feature -->
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+
+		<!-- Interceptors - IN|OUT|FAULT -->
+		<!-- Interceptors are the fundamental processing unit inside CXF. When 
+			a service is invoked, an InterceptorChain is created and invoked. Each interceptor 
+			gets a chance to do what they want to do with the message. This can include 
+			reading it, transforming it, processing headers, validating the message, 
+			etc. jasws:inInterceptos is used to add interceptors to the interceptor chain by adding it to Inbound interceptor provider-->
+		<jaxws:inInterceptors>
+			<!-- Custom Interceptors -->
+			<!--  This bean refers to teh ServiceInIntercepor we created and here I add also to teh interceptor chain -->
+			<ref bean="interceptor" />
+			<!-- Here Also I add WSS4JInterceptor to the interceptor chain so that credentials are validated whenever a request 
+			comes through to teh web service  -->
+			<bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+				<constructor-arg>
+					<map>
+						<entry key="action" value="UsernameToken" />
+						<entry key="passwordType" value="PasswordText" />
+					</map>
+				</constructor-arg>
+			</bean>
+		</jaxws:inInterceptors>
+		<!-- service's other properties -->
+		<jaxws:properties>
+			<!-- enable attachments -->
+			<entry key="mtom_enabled" value="true" />
+			<!-- disable message validation against schema -->
+			<entry key="schema-validation-enabled" value="false" />
+			<!-- Reference of UsernameToken validator bean -->
+			<entry key="ws-security.ut.validator" value-ref="serviceUserNameTokenValidator" />
+		</jaxws:properties>
+	</jaxws:endpoint>
+
+	<!-- Beans used for developing the SOAP service -->
+	<!-- Beans acting as custom In|Out interceptor -->
+	<bean id="interceptor" class="org.fluidity.soap.interceptor.ServiceInterceptor"></bean>
+
+	<!-- Bean for custom authentication of web service -->
+	<bean id="serviceUserNameTokenValidator"
+		class="org.fluidity.soap.security.ServiceUserNameTokenValidator" />
+
+
+</beans>

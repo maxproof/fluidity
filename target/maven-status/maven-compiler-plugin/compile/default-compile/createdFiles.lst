@@ -1,0 +1,11 @@
+org\fluidity\soap\security\ServiceUserNameTokenValidator.class
+org\fluidity\soap\utils\TimeZoneIds.class
+org\fluidity\soap\dto\TimeZoneInput.class
+org\fluidity\soap\service\DateTimeZoneServiceImpl.class
+org\fluidity\soap\client\SoapServiceClient.class
+org\fluidity\soap\fault\FaultElement.class
+org\fluidity\soap\service\DateTimeZoneService.class
+org\fluidity\soap\fault\FaultMessage.class
+org\fluidity\soap\dto\AttachmentData.class
+org\fluidity\soap\client\SoapServiceClient$1.class
+org\fluidity\soap\interceptor\ServiceInterceptor.class

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>CXF Services</display-name>
+	<description>CXF Services</description>
+	<!-- just create blank file, we will be adding content here to config
+		CXF and Spring config once we are done with coding -->
+	<!-- Refer to spring core -->
+	<!-- CXF uses Spring to provide XML configuration of services. So we need 
+		to load Spring via a Servlet listener and tell it where our XML configuration 
+		file is. In our case we are putting configuration file named soap-service.xml 
+		inside WEB-INF. -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- param-value>/WEB-INF/soap-service.xml /WEB-INF/rest-service.xml</param-value -->
+		<param-value>/WEB-INF/soap-service.xml</param-value>
+	</context-param>
+	<!-- Next, we need to add CXFServlet in web.xml which will handle all requests 
+		to our service. -->
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+
+</web-app>

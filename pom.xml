@@ -1,0 +1,152 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.fuidity</groupId>
+  <artifactId>fluidity</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>fluidity</name>
+	<properties>
+		<apache.cxf.version>3.2.1</apache.cxf.version>
+		<spring-version>5.0.1.RELEASE</spring-version>
+		<wss4j-version>2.0.0</wss4j-version>
+		<tomcat.plugin.version>2.2</tomcat.plugin.version>
+		<jackson.version>1.9.0</jackson.version>
+	</properties>
+	<dependencies>
+		<!-- CXF Framework -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${apache.cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>${apache.cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${apache.cxf.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-ws-security</artifactId>
+			<version>${apache.cxf.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-client</artifactId>
+			<version>${apache.cxf.version}</version>
+		</dependency>
+
+		<!-- Spring Framework. The Spring dependencies are required as we will 
+			be using a Spring configuration to configure the web services. -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
+
+		<!-- wss4j WS-Security one of the web service standards - a message-level 
+			security. we will be using UsernameToken Profile -->
+
+		<dependency>
+			<groupId>org.apache.wss4j</groupId>
+			<artifactId>wss4j</artifactId>
+			<version>2.0.0</version>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.5</version>
+		</dependency>
+
+		<!-- jackson to marshal and unmarshal messages -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-xc</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>${tomcat.plugin.version}</version>
+				<configuration>
+					<!-- http port -->
+					<port>8081</port>
+					<!-- http port for deploying to remote server -->
+					<server>tomcat</server>
+					<url>http://localhost:8081/manager/text</url>
+					<path>/fluidity</path>
+					<update>true</update>
+					<additionalClasspathDirs>
+					</additionalClasspathDirs>
+					<systemProperties>
+					</systemProperties>
+				</configuration>
+			</plugin>
+			<!-- Plugin to generate web service code from wsdl -->
+			<!-- By default, the codegen plugin follows the Maven convention of "target/generated-sources/cxf" 
+				for the output folder for the generated classes. -->
+			<!-- The options you can use to control the code generation, complete 
+				list of options can be found on Apache CXF site. -impl Generates starting 
+				point code for an implementation object. -->
+				<!-- uncomment this once we have service deployed and wsdl in our hands -->
+				<!-- 
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${apache.cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+
+							<sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/DateTimeZoneService.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-impl</extraarg>
+									</extraargs>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			 -->
+		</plugins>
+	</build>
+</project>
