@@ -28,3 +28,24 @@ org.apache.cxf.binding.soap.SoapFault: An error was discovered processing the <w
 	at org.apache.cxf.jaxws.JaxWsClientProxy.invoke(JaxWsClientProxy.java:139)
 	at com.sun.proxy.$Proxy42.getDateTimeByZone(Unknown Source)
 	at org.fluidity.soap.client.SoapServiceClient.main(SoapServiceClient.java:90) <--
+
+	
+----------------------------
+
+REST:
+	
+WARNING: to fix:
+	
+Exception in thread "main" javax.ws.rs.NotFoundException: HTTP 404 Not Found
+at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at org.apache.cxf.jaxrs.client.AbstractClient.convertToWebApplicationException(AbstractClient.java:514)
+at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:904)
+at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:866)
+at org.apache.cxf.jaxrs.client.WebClient.invoke(WebClient.java:431)
+at org.apache.cxf.jaxrs.client.WebClient.post(WebClient.java:461)
+at org.fluidity.rest.client.RestServiceClient.createEmployee(RestServiceClient.java:65)
+at org.fluidity.rest.client.RestServiceClient.main(RestServiceClient.java:104)
+	

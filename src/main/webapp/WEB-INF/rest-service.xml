@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:soap="http://cxf.apache.org/bindings/soap"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxrs
+http://cxf.apache.org/schemas/jaxrs.xsd
+http://cxf.apache.org/core 
+http://cxf.apache.org/schemas/core.xsd
+http://cxf.apache.org/jaxws
+http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<!-- These are included in the dependency jar cxf-xxx.jar -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+
+	<!-- Beans acting as RESTful Services -->
+	<bean id="fluidityRESTService" class="org.fluidity.rest.service.FluidityRESTService" />
+	<!-- Bean to perform basic authentication -->
+	<bean id="basicAuthenticationHandler" class="org.fluidity.soap.security.BasicAuthenticationHandler" />
+
+	<!-- Enable built-in features for all the services deployed -->
+	<cxf:bus>
+		<cxf:features>
+			<!-- CXF logging feature to log incoming and outgoing messages -->
+			<cxf:logging />
+		</cxf:features>
+	</cxf:bus>
+
+	<!-- REST container for RESTServiceEndPoint -->
+	<jaxrs:server id="fluidityRESTServiceId" address="/fluidityRESTService">
+		<jaxrs:serviceBeans>
+			<ref bean="fluidityRESTService" />
+		</jaxrs:serviceBeans>
+
+		<!-- Providers are a simply a way of extending and customizing the JAX-RS 
+			runtime. You can think of them as plugins that (potentially) alter the behavior 
+			of the runtime, in order to accomplish a set of (program defined) goals. 
+			These providers control the mapping of data representations (like XML, JSON, 
+			CSV) to their Java object equivalents. -->
+		<jaxrs:providers>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider" />
+			<!-- BasicAuthentication bean -->
+			<ref bean="basicAuthenticationHandler" />
+		</jaxrs:providers>
+
+		<jaxrs:properties>
+			<entry key="schema-validation-enabled" value="true" />
+			<entry key="attachment-memory-threshold" value="500000" />
+			<entry key="attachment-max-size" value="5000000" />
+			<entry key="mtom-enabled" value="true" />
+		</jaxrs:properties>
+
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+
+		<!-- Enable feature to this service only -->
+		<jaxrs:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxrs:features>
+	</jaxrs:server>
+
+
+</beans>

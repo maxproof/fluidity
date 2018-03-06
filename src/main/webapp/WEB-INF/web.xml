@@ -17,8 +17,8 @@
 	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<!-- param-value>/WEB-INF/soap-service.xml /WEB-INF/rest-service.xml</param-value -->
-		<param-value>/WEB-INF/soap-service.xml</param-value>
+		<param-value>/WEB-INF/soap-service.xml /WEB-INF/rest-service.xml</param-value>
+		<!-- param-value>/WEB-INF/soap-service.xml</param-value -->
 	</context-param>
 	<!-- Next, we need to add CXFServlet in web.xml which will handle all requests 
 		to our service. -->
